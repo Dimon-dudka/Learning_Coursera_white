@@ -1,0 +1,56 @@
+#include <iostream>
+#include<map>
+#include<vector>
+#include<string>
+using namespace std;
+
+bool BuildCharCounters(const string*user_word_one,const string*user_word_two) {
+
+    vector<char> word_one;
+    vector<char> word_two;
+    map<char, int>count_first;
+    map<char, int>count_second;
+
+    for (char w : *user_word_one) {
+        word_one.push_back(w);
+    }
+    for (char w : *user_word_two) {
+        word_two.push_back(w);
+    }
+
+    for (const char& w : word_one) {
+            ++count_first[w];
+    }
+    for (const char& w : word_two) {
+        ++count_second[w];
+    }
+    
+    if (count_first == count_second) {
+        return true;
+    }
+    else
+        return false;
+}
+
+int main() {
+    
+    int user_num;
+    vector<bool> nums;
+    string user_word_one, user_word_two;
+
+    cin >> user_num;
+
+    for (int i = 0; i < user_num;i++) {
+        cin >> user_word_one >> user_word_two;
+        nums.push_back(BuildCharCounters(&user_word_one, &user_word_two));
+    }
+
+    for (const bool &w : nums) {
+        if (w == true) {
+            cout << "YES" << endl;
+        }
+        else 
+            cout << "NO" << endl;
+    }
+    return 0;
+}
