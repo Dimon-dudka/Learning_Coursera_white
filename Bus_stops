@@ -1,0 +1,121 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+int main() {
+
+    int q;
+    map<string, vector<string>> bus_stops;
+    vector<string> one_made;
+
+    cin >> q;//enter nums of commands
+
+    for (int i = 0; i < q; i++) {
+
+        string kommand;
+        cin >> kommand;
+
+        if (kommand == "NEW_BUS") {
+            int nums_of_stops;
+            string bus;      //name of bus number
+
+            cin >> bus >> nums_of_stops;
+            one_made.push_back(bus);
+            for (int j = 0; j < nums_of_stops; j++) {
+                string name_of_bus_stop;
+                cin >> name_of_bus_stop;
+
+                bus_stops[bus].push_back(name_of_bus_stop);
+            }
+
+        }
+        else if (kommand == "BUSES_FOR_STOP") {
+
+            int rez = 0;
+            vector<string> names_for;
+            string bus_stop_name;
+            cin >> bus_stop_name;
+
+            for (const auto& w : bus_stops) {
+                for (const auto& s : w.second) {
+                    if (s == bus_stop_name) {
+                        names_for.push_back(w.first);
+                        rez++;
+                    }
+                }
+            }
+            if (rez == 0) {
+                cout << "No stop" << endl;
+            }
+            else {
+                for (const auto& w : one_made) {
+                    for (const auto& s : names_for) {
+                        if (w == s) {
+                            cout << w << " ";
+                        }
+                    }
+                }
+                cout << endl;
+            }
+
+        }
+        else if (kommand == "STOPS_FOR_BUS") {
+            string bus_name;
+            cin >> bus_name;
+
+            if (bus_stops.count(bus_name) == 0) {
+                cout << "No bus" << endl;
+            }
+            else {
+                for (const auto& i : bus_stops) { 
+                    if (i.first == bus_name) { 
+                        for (const auto& m : i.second) { 
+                            cout << "Stop " << m << ":"; 
+                            int l2 = 0; 
+                            vector<string> v;
+                            for (const auto& r : bus_stops) { 
+                                for (const auto& n : r.second) { 
+                                   
+                                    if (n == m && r.first != bus_name) {
+                                        v.push_back(r.first); 
+                                        l2++;
+                                    }
+                                }
+                            }
+                            if (l2 == 0) cout << " no interchange";
+                            else if (l2 > 0) {
+                                for (const auto& w : one_made) { 
+                                    for (const auto& z : v) { 
+                                        if (z == w) { 
+                                            cout << " " << w; 
+                                        } 
+                                    }
+                                }
+                            }
+                            cout << endl; 
+                        }
+                    }
+                }
+            }
+        }
+        else if (kommand == "ALL_BUSES") {
+            if (bus_stops.size() == 0) {
+                cout << "No buses" << endl;
+            }
+            else
+            {
+                for (const auto& w : bus_stops) {
+                    cout << "Bus " << w.first << ": ";
+                    for (const auto& s : w.second) {
+                        cout << s << " ";
+                    }
+                    cout << endl;
+                }
+            }
+        }
+    }
+    return 0;
+}
