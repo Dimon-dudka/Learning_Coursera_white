@@ -1,0 +1,32 @@
+#include <iostream>
+#include<fstream>
+#include<iomanip>
+
+using namespace std;
+
+int main() {
+    ifstream read_txt("input.txt");
+    
+    if (read_txt) {
+        int num_x = 0;
+        int num_y=0;
+        read_txt >> num_x >> num_y;
+        int number;
+        for (int i = 0; i < num_x; i++) {
+            for (int j = 0; j < num_y; j++) {
+                read_txt >> number;
+                cout << setw(10) << number;
+                if (j != num_y - 1) {
+                    cout << " ";
+                }
+                read_txt.ignore(1);
+
+            }
+            if (i != num_x - 1) {
+                cout << endl;
+            }
+        }
+    }
+
+    return 0;
+}
