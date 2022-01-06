@@ -1,0 +1,58 @@
+#include <iostream>
+#include<vector>
+#include<string>
+
+using namespace std;
+
+struct Student
+{
+    Student(const string& n, const string& v, const int& d, const int& m, const int& y) {
+        name = n;
+        vorname = v;
+        day = d;
+        month = m;
+        year = y;
+    }
+    string name, vorname;
+    int day, month, year;
+};
+
+void Name(const vector<Student>& students, const int& numer) {
+    cout << students[numer - 1].name << " " << students[numer - 1].vorname << endl; //print full name of "number" student
+}
+
+void Date(const vector<Student>& students, const int& numer) {
+    cout << students[numer - 1].day << "." << students[numer - 1].month << "." << students[numer - 1].year << endl; //print birthdate
+}
+
+int main() {
+    int number_of_operations; //enter the integer of operations;
+    vector<Student> students;  //vector of structs "Student"
+
+    cin >> number_of_operations;
+    for (int i = 0; i < number_of_operations; i++) { // cycle where we writing info about student
+        string name, vorname;
+        int day, month, year;
+
+        cin >> name >> vorname >> day >> month >> year;
+        Student student(name, vorname, day, month, year);
+        students.push_back(student);
+    }
+
+    cin >> number_of_operations;       //enter num of commands
+    for (int i = 0; i < number_of_operations; i++) {
+        string kommand;
+        int wahl;
+        cin >> kommand>>wahl;
+        if (kommand == "name" && wahl > 0 && wahl <= students.size()) {
+            Name(students, wahl);    
+        }
+        else if (kommand == "date"&&wahl>0&&wahl<=students.size()) {
+            Date(students, wahl);
+        }
+        else {
+            cout << "bad request\n";
+        }
+    }
+    return 0;
+}
